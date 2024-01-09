@@ -36,6 +36,7 @@
     import { ref } from 'vue';
     import utils from '@/utils/utils';
     import { SHA256 } from 'crypto-js';
+    import session from '@/utils/session';
     import { useRouter } from 'vue-router';
 
     const mail = ref('');
@@ -61,9 +62,10 @@
                     return response.json();
                 })
                 .then(data => {
-                    if (data.status == 'ok')
+                    if (data.status == 'ok') {
+                        session.token.value = data.session_token;
                         router.push(`/dashboard/${data.bot_id}`);
-                    else
+                    } else
                         errorLogin.value = data.error;
                 })
                 .catch(error => {

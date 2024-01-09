@@ -21,7 +21,7 @@ const setupMobileUtils = () => {
 
 function postRequest(body) {
     return {
-        hostname: 'https://526f682d-1859-45c1-9612-b5608defa5cf-00-4kak6gctfz3u.global.replit.dev/', 
+        hostname: 'https://526f682d-1859-45c1-9612-b5608defa5cf-00-ypuac8ssycx.janeway.replit.dev/', 
         options: {
             method: 'POST',
             headers: {

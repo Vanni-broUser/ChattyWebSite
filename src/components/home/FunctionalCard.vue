@@ -10,7 +10,7 @@
             <v-card-title>Funzionamento</v-card-title>
             <v-card-text>
                 <div>Chatty funziona per mezzo della tecnologia LLM sviluppata da OpenAi con ChatGPT.</div>
-                <div>L'azienda americana, leader nel settore delle AI, ha dato da poco la possibilità agli utenti di creare assistenti personalizzati con knoledge base ad hoc.</div>
+                <div>L'azienda americana, leader nel settore delle AI, ha dato da poco la possibilità agli utenti di creare assistenti personalizzati con knowledge base ad hoc.</div>
                 <div>I nostri sistemi sfruttano queste nuove tecnologie per creare chat-bot intelligenti in grado di portare a termine compiti complessi.</div>
             </v-card-text>
             <v-card-actions>

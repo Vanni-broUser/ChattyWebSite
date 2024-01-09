@@ -49,21 +49,23 @@
 
 <script setup>
     import marked from '@/chat/marked';
-    import sender from '@/chat/sender';
     import { ref, onMounted } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
+    import session from '@/utils/session';
+    import utils from '@/utils/utils';
 
     var botId = null;
     var threadId = false;
     const messages = ref([]);
     const route = useRoute();
+    const router = useRouter();
     const loading = ref(false);
     const userMessage = ref('');
     const scrollContainer = ref(null);
 
     onMounted(async () => {
         loading.value = true;
-        sender.sendMessage(route.params.botId, threadId, 'Ciao', addMessageDemo);
+        sendMessage(route.params.botId, threadId, 'Ciao');
     });
 
     const addMessageDemo = (message, bot = true) => {
@@ -72,7 +74,7 @@
             message: message
         });
         requestAnimationFrame(() => {
-            sender.scrollToBottom(scrollContainer.value);
+            scrollToBottom(scrollContainer.value);
         });
         loading.value = false;
     };
@@ -81,9 +83,47 @@
         if (userMessage.value) {
             addMessageDemo(userMessage.value, false);
             loading.value = true;
-            sender.sendMessage(botId, threadId, userMessage.value, addMessageDemo);
+            sendMessage(botId, threadId, userMessage.value);
             userMessage.value = '';
         }
+    };
+
+    const sendMessage = (botId, message) => {
+        var body = {
+            message: message,
+            bot_id: botId,
+            session_token: session.token.value
+        };
+        if (threadId) body.thread_id = threadId;
+        const post = utils.postRequest(body);
+
+        fetch(`${post.hostname}chat`, post.options)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status == 'ok') {
+                    if (!threadId) threadId = data.thread_id;
+                    addMessageDemo(data.response);
+                } else if (data.status == 'ko' && data.message == 'Sessione scaduta') {
+                    alert(data.message);
+                    router.push('/login');
+                }
+            })
+            .catch(error => {
+                console.error('Errore nella richiesta:', error);
+            })
+
+    };
+
+    const scrollToBottom = (container) => {
+        container.scrollIntoView({
+            behavior: 'smooth',
+            block: 'end'
+        });
     };
 </script>
 
