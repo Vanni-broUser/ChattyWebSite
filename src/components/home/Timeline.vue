@@ -8,7 +8,8 @@
                 <div>
                     <div class="text-h6">Richiedi una demo</div>
                     <p>
-                        Compila il form per richiedere un bot fatto ad hoc sulla tua azienda, il bot sarà attivato in due giorni lavorativi.
+                        Compila il form per richiedere un bot fatto ad hoc sulla tua azienda, il bot sarà attivato in due giorni lavorativi e sarà basato sulle
+                        informazioni che ci condividi e su quello che è scritto sul tuo sito.
                     </p>
                 </div>
             </v-timeline-item>
@@ -30,7 +31,8 @@
                 <div>
                     <div class="text-h6">Effettua l'integrazione</div>
                     <p>
-                        Non esitare a richiederci modifiche dopo la demo. Il bot è integrabile attraverso un semplice script.
+                        Dopo la demo potrai richiedere eventuali modifiche al tuo bot se necessarie. Successivamente si procederà con l'integrazione nel tuo sito
+                        attraverso un semplice script.
                     </p>
                 </div>
             </v-timeline-item>

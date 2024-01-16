@@ -15,7 +15,7 @@
       <v-row>
         <v-col v-for="(price, i) in prices" :key="i" cols="12" md="4">
           <v-item>
-            <v-card class="d-flex align-center" height="190" elevation="20">
+            <v-card class="d-flex align-center" elevation="20">
               <template v-slot:title>
                 <v-btn block class="mt-2 gradient" variant="tonal" v-if="!home" @click.prevent="buy(price.name)">
                   {{ price.name }}
@@ -76,16 +76,16 @@ const prices = ref([
     },
     features: [
       {
-        icon: "mdi-numeric-1-circle",
-        text: "Un chat-bot personalizzato"
+        icon: "mdi-forum",
+        text: "1000 chat al mese"
       },
       {
-        icon: "mdi-numeric-2-circle",
-        text: "Acquisizione di contatti"
+        icon: "mdi-account",
+        text: "Personalizzazione limitata"
       },
       {
-        icon: "mdi-numeric-3-circle",
-        text: "Prenotazione di appuntamenti"
+        icon: "mdi-chart-bar",
+        text: "Report delle chat"
       }
     ]
   },
@@ -102,20 +102,16 @@ const prices = ref([
     },
     features: [
       {
-        icon: "mdi-numeric-1-circle",
-        text: "Un chat-bot personalizzato"
+        icon: "mdi-forum",
+        text: "10000 chat al mese"
       },
       {
-        icon: "mdi-numeric-2-circle",
-        text: "Acquisizione di contatti"
+        icon: "mdi-account-star",
+        text: "Personalizzazione costante"
       },
       {
-        icon: "mdi-numeric-3-circle",
-        text: "Prenotazione di appuntamenti"
-      },
-      {
-        icon: "mdi-numeric-4-circle",
-        text: "Automazione delle vendite"
+        icon: "mdi-chart-bar",
+        text: "Report delle chat"
       }
     ]
   },
@@ -132,20 +128,16 @@ const prices = ref([
     },
     features: [
       {
-        icon: "mdi-numeric-1-circle",
-        text: "Tre chat-bot personalizzati"
+        icon: "mdi-forum",
+        text: "50000 chat al mese"
       },
       {
-        icon: "mdi-numeric-2-circle",
-        text: "Acquisizione di contatti"
+        icon: "mdi-account-star",
+        text: "Personalizzazione costante"
       },
       {
-        icon: "mdi-numeric-3-circle",
-        text: "Prenotazione di appuntamenti"
-      },
-      {
-        icon: "mdi-numeric-4-circle",
-        text: "Automazione delle vendite"
+        icon: "mdi-chart-bar",
+        text: "Report delle chat"
       }
     ]
   }
@@ -173,9 +165,6 @@ const buy = async (priceName) => {
   @media only screen and (max-width: 600px) {
     .v-list-item-title {
       white-space: normal;
-    }
-    .d-flex.align-center {
-      min-height: 240px;
     }
   }
   .divider-price {

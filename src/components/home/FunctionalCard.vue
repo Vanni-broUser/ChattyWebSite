@@ -14,9 +14,9 @@
                 <div>I nostri sistemi sfruttano queste nuove tecnologie per creare chat-bot intelligenti in grado di portare a termine compiti complessi.</div>
             </v-card-text>
             <v-card-actions>
-                <v-btn>
-                Scopri di più
-                </v-btn>
+                <a href="https://platform.openai.com/docs/introduction"><v-btn>
+                    Scopri di più
+                </v-btn></a>
             </v-card-actions>
         </v-card>
     </v-container>
@@ -25,3 +25,9 @@
 <script setup>
     //
 </script>
+
+<style scoped>
+    a {
+        color: inherit;
+    }
+</style>
