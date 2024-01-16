@@ -57,8 +57,11 @@
             <v-card-actions>
               <v-btn class="mt-2 gradient" type="submit" variant="tonal">Verifica</v-btn>
               <v-spacer></v-spacer>
-              <div class="text-caption">
+              <div class="text-caption" v-if="flagOtpAgain">
                 Non hai ricevuto nessun codice? <a href="#" @click.prevent="sendOtpAgain">Invia di nuovo</a>
+              </div>
+              <div class="text-caption" v-else>
+                Non hai ricevuto nessun codice? Richiedi tra {{ timerOtpAgain }}
               </div>
             </v-card-actions>
           </v-form>
@@ -72,7 +75,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
+  import { ref, onBeforeUnmount } from 'vue';
   import utils from '@/utils/utils';
   import { SHA256 } from 'crypto-js';
   import { useRouter } from 'vue-router';
@@ -87,6 +90,9 @@
   const botId = ref('');
   const password = ref('');
   const router = useRouter();
+  const timerOtpAgain = ref(60);
+  const flagOtpAgain = ref(false);
+
   const requiredRules = [
     (value) => {
       if (value) return true;
@@ -172,9 +178,22 @@
           return response.json();
         })
         .then(data => {
-          if (data.status == 'ok')
+          if (data.status == 'ok') {
             botId.value = data.bot_id;
-          else
+  
+            const timerOptInterval = setInterval(() => {
+              if (!flagOtpAgain.value) {
+                timerOtpAgain.value -= 1;
+                if (timerOtpAgain.value == 0) {
+                  flagOtpAgain.value = true;
+                }
+              }
+            }, 1000);
+
+            onBeforeUnmount(() => {
+              clearInterval(timerOptInterval);
+            });
+          } else
             error.value = data.error;
         })
         .catch(error => {
@@ -184,6 +203,8 @@
   };
 
   const sendOtpAgain = () => {
+    flagOtpAgain.value = false;
+    timerOtpAgain.value = 60;
     error.value = '';
     const post = utils.postRequest({
       bot_id: botId.value
