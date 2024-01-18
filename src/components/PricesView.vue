@@ -60,7 +60,7 @@ import Stripe from 'stripe';
 
 const route = useRoute();
 const switchFlag = ref(true);
-const { home } = defineProps(['home']);
+const { home, mail } = defineProps(['home', 'mail']);
 const { isMobile } = utils.setupMobileUtils();
 const prices = ref([
   {
@@ -154,6 +154,7 @@ const buy = async (priceName) => {
       },
     ],
     mode: 'subscription',
+    customer_email: mail,
     success_url:  `${window.location.origin}/create-bot/${route.params.botId}`,
     cancel_url: `${window.location.origin}/dashboard/${route.params.botId}`
     });

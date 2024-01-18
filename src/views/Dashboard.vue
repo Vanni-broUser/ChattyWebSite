@@ -12,7 +12,7 @@
                 Prova ora
             </v-btn><br>
         </v-container>
-        <PricesView :home="false" />
+        <PricesView :home="false" :mail="mail" />
     </v-container>
     <v-container v-if="status == 'Production'">
         <v-sheet width="400" class="mx-auto login-box" elevation="20">
@@ -29,6 +29,7 @@
     import PricesView from '@/components/PricesView';
     import { useRoute, useRouter } from 'vue-router';
 
+    const mail = ref('');
     const status = ref('');
     const route = useRoute();
     const router = useRouter();
@@ -44,6 +45,7 @@
             throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);
         const data = await response.json();
         status.value = data.status;
+        mail.value = data.mail;
         if (data.status == 'ko' && data.message == 'Sessione scaduta') {
             alert(data.message);
             router.push('/login');
