@@ -31,7 +31,7 @@
                 <div>
                     <div class="text-h6">Effettua l'integrazione</div>
                     <p>
-                        Dopo la demo potrai richiedere eventuali modifiche al tuo bot se necessarie. Successivamente si procederà con l'integrazione nel tuo sito
+                        Dopo la demo potrai richiedere ulteriori modifiche al tuo bot se necessarie. Successivamente si procederà con l'integrazione nel tuo sito
                         attraverso un semplice script.
                     </p>
                 </div>
