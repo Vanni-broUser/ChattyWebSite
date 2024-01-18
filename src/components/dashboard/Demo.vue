@@ -65,7 +65,7 @@
 
     onMounted(async () => {
         loading.value = true;
-        sendMessage(route.params.botId, threadId, 'Ciao');
+        sendMessage(route.params.botId, 'Ciao');
     });
 
     const addMessageDemo = (message, bot = true) => {
@@ -83,7 +83,7 @@
         if (userMessage.value) {
             addMessageDemo(userMessage.value, false);
             loading.value = true;
-            sendMessage(botId, threadId, userMessage.value);
+            sendMessage(botId, userMessage.value);
             userMessage.value = '';
         }
     };
@@ -97,7 +97,7 @@
         if (threadId) body.thread_id = threadId;
         const post = utils.postRequest(body);
 
-        fetch(`${post.hostname}chat`, post.options)
+        fetch(`${post.hostname}chat-demo`, post.options)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);

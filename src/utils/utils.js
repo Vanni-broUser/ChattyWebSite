@@ -52,20 +52,9 @@ function validateInput(value, rules) {
     return errors.length === 0 ? null : errors;
 }
 
-async function tryBot(botId) {
-    const post = postRequest({
-        bot_id: botId
-    });
-    const response = await fetch(`${post.hostname}try-bot`, post.options);
-    if (!response.ok)
-        throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);
-    return await response.json();
-}
-
 export default {
     postRequest,
     validateInput,
     validateInputAsync,
-    setupMobileUtils,
-    tryBot
+    setupMobileUtils
 };
