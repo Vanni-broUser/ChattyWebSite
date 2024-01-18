@@ -75,10 +75,11 @@
 </template>
 
 <script setup>
-  import { ref, onBeforeUnmount } from 'vue';
   import utils from '@/utils/utils';
   import { SHA256 } from 'crypto-js';
   import { useRouter } from 'vue-router';
+  import session from '@/utils/session';
+  import { ref, onBeforeUnmount } from 'vue';
   import Timeline from '@/components/home/Timeline';
 
   const otp = ref('');
@@ -146,9 +147,10 @@
           return response.json();
         })
         .then(data => {
-          if (data.status == 'ok')
+          if (data.status == 'ok') {
+            session.token.value = data.session_token;
             router.push(`/dashboard/${botId.value}`);
-          else
+          } else
             error.value = data.error;
         })
         .catch(error => {
