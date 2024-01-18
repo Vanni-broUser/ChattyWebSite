@@ -163,10 +163,8 @@ const buy = async (priceName) => {
 </script>
 
 <style scoped>
-  @media only screen and (max-width: 600px) {
-    .v-list-item-title {
-      white-space: normal;
-    }
+  .v-list-item-title {
+    white-space: normal;
   }
   .divider-price {
     margin-top: 20px;
