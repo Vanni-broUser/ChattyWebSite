@@ -31,4 +31,4 @@ function getCookie(name) {
 
 
 
-module.exports = { setCookie, getCookie };
+export default { setCookie, getCookie };
