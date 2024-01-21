@@ -2,8 +2,11 @@
     <v-container class="login-container">
         <v-sheet width="400" class="mx-auto login-box" elevation="20">
             <h3>Crea il tuo Chatty</h3><br>
+            <v-file-input accept="image/*" label="Carica il tuo logo" v-model="image" @change="uploadImage" />
+            <div class="text-caption" v-if="message != ''">{{ message }}</div>
+            <div class="error-message" v-if="error != ''">{{ error }}</div>
+            <hr>
             <v-form @submit.prevent="activeBot" enctype="multipart/form-data">
-                <v-file-input accept="image/*" label="Carica il tuo logo"></v-file-input>
                 <br><v-row class="d-flex align-center justify-space-around">
                     <v-chip-group v-model="userColor">
                         <v-chip variant="flat" v-for="(colore, i) in colors" :key="i" :color="colore.color">
@@ -22,12 +25,13 @@
 <script setup>
     import { ref } from 'vue';
     import utils from '@/utils/utils';
-    import { useRoute, useRouter } from 'vue-router';
+    import { useRouter } from 'vue-router';
 
     const img = ref('');
     const note = ref('');
     const error = ref('');
-    const route = useRoute();
+    const image = ref(null);
+    const message = ref('');
     const router = useRouter();
     const userColor = ref(null);
     const colors = [
@@ -53,28 +57,31 @@
         }
     ];
 
-    const activeBot = () => {
-        /** 
+    const uploadImage = () => {
+        if (!image.value) return;
+        alert(image.value)
         error.value = '';
-        const boId = route.params.botId;
-        var formData = new FormData();
-        formData.append('file', img);
-        formData.append('json', JSON.stringify({
-            plan: 1,
-            bot_id: boId,
-            feedback: note.value,
-            color: colors[userColor.value].name
-        }));
-        const hostname = utils.postRequest(null).hostname;
+        message.value = '';
+        const post = utils.postRequest(image.value[0]);
+      
+        fetch(`${post.hostname}upload-image`, post.options)
+            .then(response => {
+                if (!response.ok)
+                    throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);
+                return response.json();
+            })
+            .then(data => {
+                if (data.status == 'ok') 
+                    message.value = data.message;
+                else
+                    error.value = data.error;
+            })
+            .catch(error => {
+                console.error('Error uploading image:', error);
+            });
+    };
 
-        fetch(`${hostname}active-bot`, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        */
+    const activeBot = () => {
        
         const hostname = utils.postRequest(null).hostname;
         const formData = new FormData();

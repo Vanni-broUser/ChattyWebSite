@@ -1,6 +1,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const isMobile = ref(false);
+const hostname = 'https://526f682d-1859-45c1-9612-b5608defa5cf-00-ypuac8ssycx.janeway.replit.dev/';
 
 const checkMobile = () => {
     isMobile.value = window.innerWidth < 600;
@@ -21,13 +22,28 @@ const setupMobileUtils = () => {
 
 function postRequest(body) {
     return {
-        hostname: 'https://526f682d-1859-45c1-9612-b5608defa5cf-00-ypuac8ssycx.janeway.replit.dev/', 
+        hostname: hostname, 
         options: {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(body)
+        }
+    }
+};
+
+function postRequestFile(file) {
+    const formData = new FormData();
+    formData.append('image', file);
+    return {
+        hostname: hostname, 
+        options: {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            body: formData
         }
     }
 };
@@ -54,6 +70,7 @@ function validateInput(value, rules) {
 
 export default {
     postRequest,
+    postRequestFile,
     validateInput,
     validateInputAsync,
     setupMobileUtils

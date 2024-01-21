@@ -62,20 +62,20 @@
 
             fetch(`${post.hostname}otp`, post.options)
                 .then(response => {
-                if (!response.ok)
-                    throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);
-                return response.json();
+                    if (!response.ok)
+                        throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);
+                    return response.json();
                 })
                 .then(data => {
-                if (data.status == 'ok') {
-                    if (!home)
-                        emit('updateStatus', 'Not Ready');
-                    else {
-                        session.token.value = data.session_token;
-                        router.push(`/dashboard/${botId}`);
-                    }
-                } else
-                    error.value = data.error;
+                    if (data.status == 'ok') {
+                        if (!home)
+                            emit('updateStatus', 'Not Ready');
+                        else {
+                            session.token.value = data.session_token;
+                            router.push(`/dashboard/${botId}`);
+                        }
+                    } else
+                        error.value = data.error;
                 })
                 .catch(error => {
                     console.error('Errore nella richiesta:', error);
