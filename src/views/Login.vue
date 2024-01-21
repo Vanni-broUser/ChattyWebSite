@@ -63,7 +63,7 @@
                 })
                 .then(data => {
                     if (data.status == 'ok') {
-                        session.token.value = data.session_token;
+                        session.setCookie('session_token', data.session_token);
                         router.push(`/dashboard/${data.bot_id}`);
                     } else
                         errorLogin.value = data.error;

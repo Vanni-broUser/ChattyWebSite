@@ -43,7 +43,7 @@
         botId.value = route.params.botId;
         const post = utils.postRequest({
             bot_id: botId.value,
-            session_token: session.token.value
+            session_token: session.get('session_token')
         });
         const response = await fetch(`${post.hostname}try-bot`, post.options);
         if (!response.ok)

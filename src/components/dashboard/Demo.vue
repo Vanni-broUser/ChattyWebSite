@@ -92,7 +92,7 @@
         var body = {
             message: message,
             bot_id: botId,
-            session_token: session.token.value
+            session_token: session.getCookie('session_token')
         };
         if (threadId) body.thread_id = threadId;
         const post = utils.postRequest(body);
