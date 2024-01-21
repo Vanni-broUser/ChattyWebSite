@@ -62,7 +62,7 @@
         alert(image.value)
         error.value = '';
         message.value = '';
-        const post = utils.postRequest(image.value[0]);
+        const post = utils.postRequestFile(image.value[0]);
       
         fetch(`${post.hostname}upload-image`, post.options)
             .then(response => {

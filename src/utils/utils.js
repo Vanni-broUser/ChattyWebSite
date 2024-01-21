@@ -32,7 +32,6 @@ function postRequest(body) {
         }
     }
 };
-
 function postRequestFile(file) {
     const formData = new FormData();
     formData.append('file', file);
@@ -41,12 +40,12 @@ function postRequestFile(file) {
         options: {
             method: 'POST',
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Accept': '*/*',
             },
             body: formData
         }
-    }
-};
+    };
+}
 
 async function validateInputAsync(value, rules) {
     const errors = [];
