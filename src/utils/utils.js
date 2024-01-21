@@ -35,7 +35,7 @@ function postRequest(body) {
 
 function postRequestFile(file) {
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('file', file);
     return {
         hostname: hostname, 
         options: {
