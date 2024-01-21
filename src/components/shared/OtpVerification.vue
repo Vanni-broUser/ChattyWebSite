@@ -71,7 +71,7 @@
                         if (!home)
                             emit('updateStatus', 'Not Ready');
                         else {
-                            session.token.value = data.session_token;
+                            session.setCookie('session_token', data.session_token);
                             router.push(`/dashboard/${botId}`);
                         }
                     } else
