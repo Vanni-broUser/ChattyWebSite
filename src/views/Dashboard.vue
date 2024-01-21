@@ -1,8 +1,9 @@
 <template>
-    <v-container class="login-container" v-if="['Not Ready', 'Not Verified'].includes(status)">
-        <v-sheet width="400" class="mx-auto login-box" elevation="20">
-            <h1>Il tuo bot è in fase di preparazione.<br>Ti invieremo una mail appena sarà pronto.</h1>
-        </v-sheet>
+    <v-container class="login-container" v-if="status == 'Not Ready'">
+        <BotSetup />
+    </v-container>
+    <v-container class="login-container" v-if="status == 'Not Verified'">
+        <OtpVerification :email="mail" :botId="botId" :home="false" @updateStatus="updateStatus" />
     </v-container>
     <v-container v-if="status == 'Ready'">
         <Demo v-if="startDemo" />
@@ -26,18 +27,22 @@
     import { ref, onMounted } from 'vue';
     import session from '@/utils/session';
     import Demo from '@/components/dashboard/Demo';
-    import PricesView from '@/components/PricesView';
     import { useRoute, useRouter } from 'vue-router';
+    import BotSetup from '@/components/dashboard/BotSetup';
+    import PricesView from '@/components/shared/PricesView';
+    import OtpVerification from '@/components/shared/OtpVerification';
 
     const mail = ref('');
+    const botId = ref('');
     const status = ref('');
     const route = useRoute();
     const router = useRouter();
     const startDemo = ref(false);
 
     onMounted(async () => {
+        botId.value = route.params.botId;
         const post = utils.postRequest({
-            bot_id: route.params.botId,
+            bot_id: botId.value,
             session_token: session.token.value
         });
         const response = await fetch(`${post.hostname}try-bot`, post.options);
@@ -55,4 +60,8 @@
     const btnDemo = async () => {
         startDemo.value = true;
     };
+
+    const updateStatus = (newValue) => {
+        status.value = newValue;
+    }
 </script>

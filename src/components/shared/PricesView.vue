@@ -155,7 +155,7 @@ const buy = async (priceName) => {
     ],
     mode: 'subscription',
     customer_email: mail,
-    success_url:  `${window.location.origin}/create-bot/${route.params.botId}`,
+    success_url:  `${window.location.origin}/dashboard/${route.params.botId}`,
     cancel_url: `${window.location.origin}/dashboard/${route.params.botId}`
     });
     window.location.href = checkoutSession.url;

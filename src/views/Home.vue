@@ -12,7 +12,7 @@
 
 <script setup>
   import TripleGrid from '@/components/home/TripleGrid.vue';
-  import PricesView from '@/components/PricesView.vue';
+  import PricesView from '@/components/shared/PricesView.vue';
   import AddingValue from '@/components/home/AddingValue.vue';
   import ContactForm from '@/components/home/ContactForm.vue';
   import FunctionalCard from '@/components/home/FunctionalCard.vue';
