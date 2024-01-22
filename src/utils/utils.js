@@ -32,9 +32,10 @@ function postRequest(body) {
         }
     }
 };
-function postRequestFile(file) {
+
+function postRequestFile(file, filename) {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file, `${filename}.${file.name.split('.').pop()}`);
     return {
         hostname: hostname, 
         options: {

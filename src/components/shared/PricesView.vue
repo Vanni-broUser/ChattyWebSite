@@ -60,8 +60,9 @@ import Stripe from 'stripe';
 
 const route = useRoute();
 const switchFlag = ref(true);
-const { home, mail } = defineProps(['home', 'mail']);
 const { isMobile } = utils.setupMobileUtils();
+const { home, mail } = defineProps(['home', 'mail']);
+
 const prices = ref([
   {
     name: "Basic",
@@ -86,6 +87,10 @@ const prices = ref([
       {
         icon: "mdi-chart-bar",
         text: "Report delle chat"
+      },
+      {
+        icon: "mdi-numeric-1-circle",
+        text: "Una funzionalità per bot"
       }
     ]
   },
@@ -112,6 +117,10 @@ const prices = ref([
       {
         icon: "mdi-chart-bar",
         text: "Report delle chat"
+      },
+      {
+        icon: "mdi-numeric-2-circle",
+        text: "Due funzionalità per bot"
       }
     ]
   },
@@ -138,6 +147,10 @@ const prices = ref([
       {
         icon: "mdi-chart-bar",
         text: "Report delle chat"
+      },
+      {
+        icon: "mdi-numeric-3-circle",
+        text: "Tre funzionalità per bot"
       }
     ]
   }
@@ -157,9 +170,9 @@ const buy = async (priceName) => {
     customer_email: mail,
     success_url:  `${window.location.origin}/dashboard/${route.params.botId}`,
     cancel_url: `${window.location.origin}/dashboard/${route.params.botId}`
-    });
-    window.location.href = checkoutSession.url;
-  };
+  });
+  window.location.href = checkoutSession.url;
+};
 </script>
 
 <style scoped>

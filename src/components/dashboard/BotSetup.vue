@@ -5,19 +5,26 @@
             <v-file-input accept="image/*" label="Carica il tuo logo" v-model="image" @change="uploadImage" />
             <div class="text-caption" v-if="message != ''">{{ message }}</div>
             <div class="error-message" v-if="error != ''">{{ error }}</div>
-            <hr>
+            <br><v-divider :thickness="3"></v-divider><br>
             <v-form @submit.prevent="activeBot" enctype="multipart/form-data">
-                <br><v-row class="d-flex align-center justify-space-around">
+                <v-textarea v-model="note" rows="3" label="Descrivi la tua azienda"
+                    hint="Più informazioni ci darai sulla tua azienda più il bot sarà efficace" />
+                <h4>Seleziona l'obbiettivo del tuo bot:</h4>
+                <v-checkbox v-model="service1" label="Automazione delle vendite" class="service-check-box" @click="checkBox(1)" />
+                <v-checkbox v-model="service2" label="Acquisizione di contatti" class="service-check-box" @click="checkBox(2)" />
+                <v-checkbox v-model="service3" label="Prenotazione di appuntamenti" class="service-check-box" @click="checkBox(3)" />
+                <div class="text-caption" v-if="msgCheckBox != ''">{{ msgCheckBox }}</div>
+                <br><h4>Seleziona una palette colori:</h4><br>
+                <v-row class="d-flex align-center justify-space-around">
                     <v-chip-group v-model="userColor">
-                        <v-chip variant="flat" v-for="(colore, i) in colors" :key="i" :color="colore.color">
+                        <v-chip variant="flat" v-for="(colore, i) in colors" :key="i" color="black" :class="`${colore.color}-chip`">
                             {{ colore.name }}
                         </v-chip>
                     </v-chip-group>
                 </v-row><br>
-                <v-textarea v-model="note" rows="3" label="I tuoi feeback" />
-                <v-btn type="submit" block class="mt-2 gradient" variant="tonal">CREA</v-btn>
+                <v-btn type="submit" block class="mt-2 gradient" variant="tonal">Salva</v-btn>
             </v-form>
-            <br><div class="error-message">{{ error }}</div>
+            <v-btn @click="disableSetupBot" block class="mt-2 gradient" variant="tonal" v-if="flagSetupBot">Indietro</v-btn>
         </v-sheet>
     </v-container>
 </template>
@@ -25,31 +32,37 @@
 <script setup>
     import { ref } from 'vue';
     import utils from '@/utils/utils';
-    import { useRouter } from 'vue-router';
+    import { useRoute } from 'vue-router';
 
-    const img = ref('');
     const note = ref('');
     const error = ref('');
     const image = ref(null);
     const message = ref('');
-    const router = useRouter();
+    const route = useRoute();
+    const msgCheckBox = ref('');
+    const service1 = ref(false);
+    const service2 = ref(false);
+    const service3 = ref(false);
     const userColor = ref(null);
+    const emit = defineEmits(['disableSetupBot']);
+    const { flagSetupBot } = defineProps(['flagSetupBot']);
+
     const colors = [
-        {
-            name: 'Rosso',
-            color: 'red'
-        },
         {
             name: 'Blu',
             color: 'blue'
+        },
+        {
+            name: 'Rosso',
+            color: 'red'
         },
         {
             name: 'Verde',
             color: 'green'
         },
         {
-            name: 'Giallo',
-            color: 'yellow'
+            name: 'Viola',
+            color: 'purple'
         },
         {
             name: 'Arancione',
@@ -57,12 +70,30 @@
         }
     ];
 
+    const disableSetupBot = () => {
+        emit('disableSetupBot');
+    };
+
+    const checkBox = (n) => {
+        if (n == 1) {
+            service2.value = false;
+            service3.value = false;
+        } else if (n == 2) {
+            service1.value = false;
+            service3.value = false;
+        } else if (n == 3) {
+            service1.value = false;
+            service2.value = false;
+        }
+        if (msgCheckBox.value == '')
+            msgCheckBox.value = 'Abbonati al pacchetto Premium o Enterprise per usare più funzionalità contemporaneamente'
+    };
+
     const uploadImage = () => {
         if (!image.value) return;
-        alert(image.value)
         error.value = '';
         message.value = '';
-        const post = utils.postRequestFile(image.value[0]);
+        const post = utils.postRequestFile(image.value[0], route.params.botId);
       
         fetch(`${post.hostname}upload-image`, post.options)
             .then(response => {
@@ -82,28 +113,49 @@
     };
 
     const activeBot = () => {
-       
-        const hostname = utils.postRequest(null).hostname;
-        const formData = new FormData();
-         formData.append('file', img.value);
+        const template = []
+        if (service1.value) template.push('Automazione delle vendite');
+        if (service2.value) template.push('Acquisizione di contatti');
+        if (service3.value) template.push('Prenotazione di appuntamenti');
+        const post = utils.postRequest({
+            template: template,
+            description: note.value,
+            bot_id: route.params.botId,
+            color_palette: userColor.value
+        });
 
-            fetch(`${hostname}upload`, {
-            method: 'POST',
-            body: formData,
-            })
+        fetch(`${post.hostname}change-password`, post.options)
             .then(response => {
                 if (!response.ok)
                     throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);
                 return response.json();
             })
             .then(data => {
-                if (data.status == 'ok')
-                    router.push(`/dashboard/${boId}`);
-                else
-                    error.value = data.error;
+                // TODO
             })
             .catch(error => {
-                console.error('Errore:', error);
+                console.error('Errore nella richiesta:', error);
             });
     };
 </script>
+
+<style scoped>
+    .service-check-box {
+        height: 50px;
+    }
+    .red-chip {
+        background: red;
+    }
+    .blue-chip {
+        background: blue;
+    }
+    .green-chip {
+        background: green;
+    }
+    .purple-chip {
+        background: purple;
+    }
+    .orange-chip {
+        background: orange;
+    }
+</style>

@@ -1,21 +1,27 @@
 <template>
-    <v-container class="login-container" v-if="status == 'Not Ready'">
-        <BotSetup />
+    <v-container class="login-container" v-if="status == 'Not Ready' || flagSetupBot">
+        <BotSetup :flagSetupBot="flagSetupBot" @disableSetupBot="disableSetupBot" />
     </v-container>
     <v-container class="login-container" v-if="status == 'Not Verified'">
         <OtpVerification :email="mail" :botId="botId" :home="false" @updateStatus="updateStatus" />
     </v-container>
-    <v-container v-if="status == 'Ready'">
+    <v-container v-if="status == 'Ready' && !flagSetupBot">
         <Demo v-if="startDemo" />
-        <v-container v-else  class="message-box">
+        <v-container v-else class="message-box">
             <h1>Clicca qui per avviare una demo</h1><br>
             <v-btn variant="outlined" type="submit" block class="mt-2 gradient" @click="btnDemo">
                 Prova ora
-            </v-btn><br>
+            </v-btn><br><br>
+        </v-container>
+        <v-container class="message-box">
+            <h1>Modifica le configurazioni del tuo bot</h1><br>
+            <v-btn variant="outlined" type="submit" block class="mt-2 gradient" @click="btnSetupBot">
+                Modifica
+            </v-btn><br><br>
         </v-container>
         <PricesView :home="false" :mail="mail" />
     </v-container>
-    <v-container v-if="status == 'Production'">
+    <v-container v-if="status == 'Production' && !flagSetupBot">
         <v-sheet width="400" class="mx-auto login-box" elevation="20">
             <h1>Il tuo bot è in fase di produzione.<br>Copia questo script javascript per integrarlo sul tuo sito web.</h1>
         </v-sheet>
@@ -38,6 +44,7 @@
     const route = useRoute();
     const router = useRouter();
     const startDemo = ref(false);
+    const flagSetupBot = ref(false);
 
     onMounted(async () => {
         botId.value = route.params.botId;
@@ -56,6 +63,14 @@
             router.push('/login');
         }
     });
+
+    const btnSetupBot = () => {
+        flagSetupBot.value = true;
+    };
+
+    const disableSetupBot = () => {
+        flagSetupBot.value = false;
+    };
 
     const btnDemo = async () => {
         startDemo.value = true;
