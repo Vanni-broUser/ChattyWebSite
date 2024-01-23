@@ -1,11 +1,11 @@
 <template>
-    <v-container class="login-container" v-if="status == 'Not Ready' || flagSetupBot">
-        <BotSetup :flagSetupBot="flagSetupBot" @disableSetupBot="disableSetupBot" />
+    <v-container class="login-container" v-if="botData.status == 'Not Ready' || flagSetupBot">
+        <BotSetup :flagSetupBot="flagSetupBot" :botData="botData" @disableSetupBot="disableSetupBot" />
     </v-container>
-    <v-container class="login-container" v-if="status == 'Not Verified'">
-        <OtpVerification :email="mail" :botId="botId" :home="false" @updateStatus="updateStatus" />
+    <v-container class="login-container" v-if="botData.status == 'Not Verified'">
+        <OtpVerification :email="botData.mail" :botId="botId" :home="false" @updateStatus="updateStatus" />
     </v-container>
-    <v-container v-if="status == 'Ready' && !flagSetupBot">
+    <v-container v-if="botData.status == 'Ready' && !flagSetupBot">
         <Demo v-if="startDemo" />
         <v-container v-else class="message-box">
             <h1>Clicca qui per avviare una demo</h1><br>
@@ -19,9 +19,9 @@
                 Modifica
             </v-btn><br><br>
         </v-container>
-        <PricesView :home="false" :mail="mail" />
+        <PricesView :home="false" :mail="botData.mail" />
     </v-container>
-    <v-container v-if="status == 'Production' && !flagSetupBot">
+    <v-container v-if="botData.status == 'Production' && !flagSetupBot">
         <v-sheet width="400" class="mx-auto login-box" elevation="20">
             <h1>Il tuo bot è in fase di produzione.<br>Copia questo script javascript per integrarlo sul tuo sito web.</h1>
         </v-sheet>
@@ -38,9 +38,8 @@
     import PricesView from '@/components/shared/PricesView';
     import OtpVerification from '@/components/shared/OtpVerification';
 
-    const mail = ref('');
+    const botData = ref({});
     const botId = ref('');
-    const status = ref('');
     const route = useRoute();
     const router = useRouter();
     const startDemo = ref(false);
@@ -56,12 +55,11 @@
         if (!response.ok)
             throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);
         const data = await response.json();
-        status.value = data.status;
-        mail.value = data.mail;
         if (data.status == 'ko' && data.message == 'Sessione scaduta') {
             alert(data.message);
             router.push('/login');
-        }
+        } else
+            botData.value = data.bot;
     });
 
     const btnSetupBot = () => {
@@ -77,6 +75,6 @@
     };
 
     const updateStatus = (newValue) => {
-        status.value = newValue;
+        botData.value.status = newValue;
     }
 </script>
