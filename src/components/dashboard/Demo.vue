@@ -54,7 +54,6 @@
     import session from '@/utils/session';
     import utils from '@/utils/utils';
 
-    var botId = null;
     var threadId = false;
     const messages = ref([]);
     const route = useRoute();
@@ -65,7 +64,7 @@
 
     onMounted(async () => {
         loading.value = true;
-        sendMessage(route.params.botId, 'Ciao');
+        sendMessage('Ciao');
     });
 
     const addMessageDemo = (message, bot = true) => {
@@ -83,15 +82,15 @@
         if (userMessage.value) {
             addMessageDemo(userMessage.value, false);
             loading.value = true;
-            sendMessage(botId, userMessage.value);
+            sendMessage(userMessage.value);
             userMessage.value = '';
         }
     };
 
-    const sendMessage = (botId, message) => {
+    const sendMessage = (message) => {
         var body = {
             message: message,
-            bot_id: botId,
+            bot_id: route.params.botId,
             session_token: session.getCookie('session_token')
         };
         if (threadId) body.thread_id = threadId;
