@@ -4,7 +4,7 @@
   <PotentialCarousel id="potenzialitaSection" />
   <FunctionalCard id="funzionamentoSection" />
   <div id="prezziSection">
-    <PricesView :home="true" />
+    <PricesView page="Home" />
   </div>
   <AddingValue />
   <br>

@@ -14,13 +14,13 @@
             </v-btn><br><br>
         </v-container>
         <v-container class="message-box">
-            <ModifyPanel @btnSetupBot="btnSetupBot" /><br><br>
+            <ModifyPanel @btnSetupBot="btnSetupBot" /><br>
         </v-container>
-        <PricesView :home="false" :mail="botData.mail" />
+        <PricesView page="Ready" :mail="botData.mail" />
     </v-container>
     <v-container v-if="botData.status == 'Production' && !flagSetupBot">
         <Dashboard @btnSetupBot="btnSetupBot" :botData="botData" />
-        <PricesView :home="false" :mail="botData.mail" />
+        <PricesView page="Production" :mail="botData.mail" :plan="botData.plan" />
     </v-container>
 </template>
 
