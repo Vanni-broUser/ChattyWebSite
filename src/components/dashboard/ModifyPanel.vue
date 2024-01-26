@@ -1,5 +1,5 @@
 <template>
-    <h2>Modifica le configurazioni del tuo bot</h2><br>
+    <h2>Modifica le configurazioni del bot</h2><br>
     <v-btn variant="outlined" type="submit" block class="mt-2 gradient" @click="emitBtnSetupBot">
         Modifica
     </v-btn>

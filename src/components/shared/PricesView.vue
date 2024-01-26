@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <hr style="background-color: white;">
+    <hr style="background-color: white;" v-if="page != 'Production'">
     <v-row class="divider-price">
       <v-col>
         <h3 block v-if="page == 'Home'">Prezzi</h3>
