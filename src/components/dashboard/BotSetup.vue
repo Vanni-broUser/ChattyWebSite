@@ -5,7 +5,7 @@
             <v-file-input accept="image/*" label="Carica il tuo logo" v-model="image" @change="uploadImage" />
             <div class="text-caption" v-if="messageImg != ''">{{ messageImg }}</div>
             <div class="error-message" v-if="errorImg != ''">{{ errorImg }}</div>
-            <br><v-divider :thickness="3"></v-divider><br>
+            <br><v-divider :thickness="3" /><br>
             <v-form @submit.prevent="activeBot" enctype="multipart/form-data">
                 <v-textarea v-model="note" rows="3" label="Descrivi la tua azienda"
                     hint="Più informazioni ci darai sulla tua azienda più il bot sarà efficace" />
