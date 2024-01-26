@@ -1,0 +1,87 @@
+<svg id="Gruppo_2" data-name="Gruppo 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="929.469" height="892.031" viewBox="0 0 929.469 892.031">
+  <defs>
+    <style>
+      .cls-1, .cls-4, .cls-6, .cls-7 {
+        fill: #fff;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        opacity: 0.9;
+      }
+
+      .cls-2, .cls-3 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-4 {
+        filter: url(#filter);
+      }
+
+      .cls-5 {
+        fill: url(#linear-gradient-3);
+        filter: url(#filter-2);
+      }
+
+      .cls-6 {
+        filter: url(#filter-3);
+      }
+
+      .cls-7 {
+        filter: url(#filter-4);
+      }
+    </style>
+    <linearGradient id="linear-gradient" y1="447" x2="930" y2="447" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#04767c"/>
+      <stop offset="0.389" stop-color="#274c75"/>
+      <stop offset="0.623" stop-color="#49246e"/>
+      <stop offset="1" stop-color="#620769"/>
+    </linearGradient>
+    <filter id="filter" x="241" y="156" width="449" height="450" filterUnits="userSpaceOnUse">
+      <feOffset result="offset" in="SourceAlpha"/>
+      <feGaussianBlur result="blur" stdDeviation="2.236"/>
+      <feFlood result="flood" flood-color="#fff" flood-opacity="0.52"/>
+      <feComposite result="composite" operator="in" in2="blur"/>
+      <feBlend result="blend" in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient-3" x1="930" y1="554.268" x2="0" y2="339.732" gradientUnits="userSpaceOnUse">
+      <stop offset="0.35" stop-color="#620769"/>
+      <stop offset="0.378" stop-color="#620769"/>
+      <stop offset="0.476" stop-color="#49246e"/>
+      <stop offset="0.558" stop-color="#274c75"/>
+      <stop offset="0.65" stop-color="#04767c"/>
+    </linearGradient>
+    <filter id="filter-2" x="347.25" y="211.969" width="222.75" height="228.469" filterUnits="userSpaceOnUse">
+      <feGaussianBlur result="blur" stdDeviation="2.828" in="SourceAlpha"/>
+      <feFlood result="flood" flood-color="#fff" flood-opacity="0.21"/>
+      <feComposite result="composite" operator="out" in2="blur"/>
+      <feOffset result="offset"/>
+      <feComposite result="composite-2" operator="in" in2="SourceAlpha"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+    <filter id="filter-3" x="248" y="644" width="99" height="102" filterUnits="userSpaceOnUse">
+      <feOffset result="offset" in="SourceAlpha"/>
+      <feGaussianBlur result="blur" stdDeviation="2.236"/>
+      <feFlood result="flood" flood-color="#fff" flood-opacity="0.52"/>
+      <feComposite result="composite" operator="in" in2="blur"/>
+      <feBlend result="blend" in="SourceGraphic"/>
+    </filter>
+    <filter id="filter-4" x="347" y="614" width="336" height="160" filterUnits="userSpaceOnUse">
+      <feOffset result="offset" in="SourceAlpha"/>
+      <feGaussianBlur result="blur" stdDeviation="2.236"/>
+      <feFlood result="flood" flood-color="#fff" flood-opacity="0.52"/>
+      <feComposite result="composite" operator="in" in2="blur"/>
+      <feBlend result="blend" in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <path id="Colore_riempimento_1" data-name="Colore riempimento 1" class="cls-1" d="M379,0c82.736-1.579,132.618,25.6,173,66,7.446,7.45,18.761,15.824,22,27L339,229q-0.5,147.986-1,296L208,450q0.5-93.99,1-188c0-38.092-3.352-81.778,4-114,8.167-35.8,21.62-65.542,41-90,19.036-24.023,51.6-41.691,85-51ZM713,725V521c0-12.9,3.118-66.1-2-72L455,303v-1l134-74,55,31,130,75c44.415,26.383,88.69,45.8,118,87a218.338,218.338,0,0,1,30,60C967.378,625.716,832.438,717.78,713,725ZM590,516h3V670L415,771c-33.6,20.04-65.271,43.6-108,54-32.631,7.945-75.529,3.315-103-5C79.459,782.3,52.325,662.644,105,531L338,665Z" transform="translate(-0.531)"/>
+  <path id="Riempimento_sfumatura_2" data-name="Riempimento sfumatura 2" class="cls-2" d="M379,0c82.736-1.579,132.618,25.6,173,66,7.446,7.45,18.761,15.824,22,27L339,229q-0.5,147.986-1,296L208,450q0.5-93.99,1-188c0-38.092-3.352-81.778,4-114,8.167-35.8,21.62-65.542,41-90,19.036-24.023,51.6-41.691,85-51ZM713,725V521c0-12.9,3.118-66.1-2-72L455,303v-1l134-74,55,31,130,75c44.415,26.383,88.69,45.8,118,87a218.338,218.338,0,0,1,30,60C967.378,625.716,832.438,717.78,713,725ZM590,516h3V670L415,771c-33.6,20.04-65.271,43.6-108,54-32.631,7.945-75.529,3.315-103-5C79.459,782.3,52.325,662.644,105,531L338,665Z" transform="translate(-0.531)"/>
+  <path id="Riempimento_sfumatura_1" data-name="Riempimento sfumatura 1" class="cls-3" d="M659,72c104.206-1.387,160.214,43.88,190,116,26.422,63.975,20.907,135.2-15,183L678,281l-89-52L463,304h2L715,449q0.5,138.486,1,277c-8.674,41.878-29.223,80.258-52,109-72.83,91.9-258.757,66.32-306-31L591,667V521L334,668l-56-32C186.962,581.531,57.246,530.351,14,430-40.8,302.837,80.831,162.311,210,180V450l127,72V224L572,92l62-17Z" transform="translate(-0.531)"/>
+  <path id="Colore_riempimento_2" data-name="Colore riempimento 2" class="cls-4" d="M328,162c73.039,6.785,155.014,9.6,244,3,25.8-1.915,80.187-8.971,94,14,21.9,36.424,19.75,240.787,8,258-24.929,36.519-94.652,43.5-151,47-9.994,48.038-52.226,92.164-89,115h-1c8.024-57.731,12.863-73.136-18-115-53.036.3-138.1-16.167-155-50-9.067-18.157-11.331-47.669-12-73-0.2-7.57-1.225-105.613,12-172C266.862,164.637,297.477,162.613,328,162Z" transform="translate(-0.531)"/>
+  <path id="Riempimento_sfumatura_3" data-name="Riempimento sfumatura 3" class="cls-5" d="M550,403c-7.338,7.477-8.139,8.185-16,14-45.625,33.748-104.522,29.855-147-4-48.236-38.444-52.193-114.068-14-160,14.941-17.968,48.082-39.057,83-41,56.886-1.371,89.536,28.067,114,67-0.667,1-.333,0-1,1l-36,25h0c-26.152-65.87-126.3-60.652-138,16-7.223,47.32,47.527,85.194,93,69,16.663-5.934,31.324-21.761,41-35l5,5,30,28" transform="translate(-0.531)"/>
+  <path id="Colore_riempimento_4" data-name="Colore riempimento 4" class="cls-6" d="M332.1,723.608A36.412,36.412,0,0,1,325.936,729c-17.573,13-40.259,11.5-56.62-1.54-18.579-14.808-20.1-43.936-5.392-61.628,5.755-6.92,18.52-15.043,31.969-15.792,21.911-.527,34.487,10.811,43.909,25.807-0.256.385-.128,0-0.385,0.385l-13.866,9.629c-0.385-.256.385,0.257,0,0C315.478,660.49,276.9,662.5,272.4,692.024c-2.782,18.226,18.3,32.814,35.82,26.577,6.419-2.286,12.066-8.382,15.793-13.481l1.925,1.926q5.778,5.391,11.555,10.785" transform="translate(-0.531)"/>
+  <path id="Colore_riempimento_3" data-name="Colore riempimento 3" class="cls-7" d="M353.383,620.744V738.031h8.038V683.242q0-10.5,8.448-17.634a29.906,29.906,0,0,1,19.93-7.135q19.355,0,19.356,19.848v59.71h8.038V677.5q0-12.3-7.3-19.11t-18.619-6.808q-19.684,0-29.526,15.912h-0.328V620.744h-8.038ZM508.56,738.031v-5.906h-0.492a13.162,13.162,0,0,1-3.937.82q-5.413,0-5.413-5.905V677.173q0-25.752-29.363-25.754-31.167,0-33.791,25.918h8.2q1.8-19.027,25.589-19.028,21.322,0,21.325,18.372v2.952q0,5.745-4.429,7.546t-20.176,3.281a108.782,108.782,0,0,0-12.8,2.05,42.241,42.241,0,0,0-10.417,4.019,17.984,17.984,0,0,0-7.709,7.792,26.733,26.733,0,0,0-2.543,12.221q0,11.317,7.464,17.47t19.6,6.151q19.846,0,30.675-15.255h0.492v2.952q0,5.745,3.035,8.612a11.336,11.336,0,0,0,8.12,2.871,14.62,14.62,0,0,0,6.561-1.312h0Zm-62.334-8.612q-5.413-4.019-5.413-12.549a22.027,22.027,0,0,1,1.8-9.514,12.072,12.072,0,0,1,5.906-5.742,35.556,35.556,0,0,1,7.956-2.788q3.852-.819,10.58-1.641,17.385-1.968,23.621-5.085v15.748q0,10.173-8.2,17.88t-21.981,7.71Q451.64,733.438,446.226,729.419Zm79.558-69.47v64.3q0,14.438,14.435,14.436a24.086,24.086,0,0,0,8.53-1.477v-6.889h-0.492a12.876,12.876,0,0,1-6.4,1.476q-4.268,0-6.152-1.8t-1.886-6.4V659.949h15.42v-6.726h-15.42V627.634h-8.038v25.589H512.661v6.726h13.123Zm44.455,0v64.3q0,14.438,14.435,14.436a24.094,24.094,0,0,0,8.53-1.477v-6.889h-0.492a12.879,12.879,0,0,1-6.4,1.476q-4.267,0-6.151-1.8t-1.887-6.4V659.949H593.7v-6.726h-15.42V627.634h-8.037v25.589H557.116v6.726h13.123Zm62.332,102.2q5.413-3.937,9.022-13.943l34.12-94.978h-8.2l-19.684,56.1q-2.954,8.532-6.89,21.161h-0.328l-7.382-21.161-20.668-56.1h-8.366l32.479,86.12-2.46,7.053q-4.268,12.3-15.256,12.3a27.655,27.655,0,0,1-6.725-.82H611.9V765.1a24.651,24.651,0,0,0,6.4.984Q627.158,766.081,632.571,762.144Z" transform="translate(-0.531)"/>
+</svg>
