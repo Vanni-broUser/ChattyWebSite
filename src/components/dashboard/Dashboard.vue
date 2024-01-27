@@ -11,7 +11,7 @@
         <ModifyPanel @btnSetupBot="emitBtnSetupBot" />
         <br><v-divider :thickness="3" /><br>
         <h2>Visualizza le conversazioni avvenute con il bot</h2><br>
-        <v-btn variant="outlined" type="submit" block class="mt-2 gradient" @click="emitBtnSetupBot">
+        <v-btn variant="outlined" type="submit" block class="mt-2 gradient" @click="emitBtnViewChat">
             Vedi
         </v-btn>
     </v-sheet>
@@ -23,7 +23,7 @@
     import ModifyPanel from '@/components/dashboard/ModifyPanel';
 
     const code = ref("Codice qui");
-    const emit = defineEmits(['btnSetupBot']);
+    const emit = defineEmits(['btnSetupBot', 'btnViewChat']);
     const { botData } = defineProps(['botData']);
     const limit = ref(100);     // TEST_PLAN_THREADS_LIMIT
     const plan = prices_list.prices.find(plan => plan.name == botData.plan);
@@ -32,6 +32,10 @@
 
     const emitBtnSetupBot = () => {
         emit('btnSetupBot');
+    };
+
+    const emitBtnViewChat = () => {
+        emit('btnViewChat');
     };
 
     const copyCode = () => {
@@ -45,9 +49,6 @@
 </script>
 
 <style scoped>
-    .dashboard {
-        max-width: 1000px;
-    }
     .code-block {
         background: #ECEFF1;
         color: #78909C;

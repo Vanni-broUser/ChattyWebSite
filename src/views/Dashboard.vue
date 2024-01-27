@@ -18,9 +18,12 @@
         </v-container>
         <PricesView page="Ready" :mail="botData.mail" />
     </v-container>
-    <v-container v-if="botData.status == 'Production' && !flagSetupBot">
-        <Dashboard @btnSetupBot="btnSetupBot" :botData="botData" />
-        <PricesView page="Production" :mail="botData.mail" :plan="botData.plan" />
+    <v-container v-if="botData.status == 'Production' && !flagSetupBot && !flagViewChat">
+        <Dashboard @btnSetupBot="btnSetupBot" :botData="botData" @btnViewChat="btnViewChat" />
+        <PricesView page="Production" :mail="botData.mail" :plan="{name: botData.plan, type: botData.sub}" />
+    </v-container>
+    <v-container v-if="flagViewChat">
+        <ViewChat @btnViewChat="btnViewChat" />
     </v-container>
 </template>
 
@@ -30,6 +33,7 @@
     import session from '@/utils/session';
     import Demo from '@/components/dashboard/Demo';
     import { useRoute, useRouter } from 'vue-router';
+    import ViewChat from '@/components/dashboard/ViewChat';
     import BotSetup from '@/components/dashboard/BotSetup';
     import PricesView from '@/components/shared/PricesView';
     import Dashboard from '@/components/dashboard/Dashboard';
@@ -42,6 +46,7 @@
     const router = useRouter();
     const startDemo = ref(false);
     const flagSetupBot = ref(false);
+    const flagViewChat = ref(false);
 
     onMounted(async () => {
         botId.value = route.params.botId;
@@ -62,6 +67,10 @@
 
     const btnSetupBot = () => {
         flagSetupBot.value = true;
+    };
+
+    const btnViewChat = () => {
+        flagViewChat.value = !flagViewChat.value;
     };
 
     const disableSetupBot = () => {

@@ -18,7 +18,7 @@
             <v-card class="d-flex align-center" elevation="20">
               <template v-slot:title>
                 <v-btn block class="mt-2 gradient" variant="tonal" v-if="
-                  page == 'Ready' || (page == 'Production' && price.name != plan)
+                  page == 'Ready' || (page == 'Production' && (price.name != plan.name || (switchFlag && plan.type == 'M')))
                 " @click.prevent="buy(price.name)">
                   {{ price.name }}
                 </v-btn>
