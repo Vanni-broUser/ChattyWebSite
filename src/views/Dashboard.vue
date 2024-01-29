@@ -20,7 +20,7 @@
     </v-container>
     <v-container v-if="botData.status == 'Production' && !flagSetupBot && !flagViewChat">
         <Dashboard @btnSetupBot="btnSetupBot" :botData="botData" @btnViewChat="btnViewChat" />
-        <PricesView page="Production" :mail="botData.mail" :plan="{name: botData.plan, type: botData.sub}" />
+        <PricesView page="Production" :mail="botData.mail" :plan="{name: botData.plan, type: botData.subscription}" />
     </v-container>
     <v-container v-if="flagViewChat">
         <ViewChat @btnViewChat="btnViewChat" />

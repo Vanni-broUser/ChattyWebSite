@@ -88,18 +88,24 @@
     };
 
     const checkBox = (n) => {
-        if (n == 1) {
-            service2.value = false;
-            service3.value = false;
-        } else if (n == 2) {
-            service1.value = false;
-            service3.value = false;
-        } else if (n == 3) {
-            service1.value = false;
-            service2.value = false;
+        if (n == 1)
+            deactiveCheckBox(service2, service3);
+        else if (n == 2)
+            deactiveCheckBox(service1, service3);
+        else if (n == 3)
+            deactiveCheckBox(service1, service2);
+        if (msgCheckBox.value == '' && botData.plan != 'Enterprise')
+            msgCheckBox.value = `Abbonati al pacchetto ${botData.plan != 'Premium' ? 'Premium o ' : ''}Enterprise per usare più funzionalità contemporaneamente`;
+    };
+
+    const deactiveCheckBox = (first, second) => {
+        if (botData.plan == 'Basic' || ['Not Ready', 'Ready'].includes(botData.status)) {
+            first.value = false;
+            second.value = false;
+        } else if (botData.plan == 'Premium') {
+            if (first.value) second.value = false;
+            else if (second.value) first.value = false;
         }
-        if (msgCheckBox.value == '')
-            msgCheckBox.value = 'Abbonati al pacchetto Premium o Enterprise per usare più funzionalità contemporaneamente'
     };
 
     const uploadImage = () => {
