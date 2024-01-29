@@ -54,7 +54,8 @@
             bot_id: botId.value,
             session_token: session.getCookie('session_token')
         });
-        const response = await fetch(`${post.hostname}try-bot`, post.options);
+
+        const response = await fetch(`${post.hostname}load-dashboard`, post.options);
         if (!response.ok)
             throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);
         const data = await response.json();

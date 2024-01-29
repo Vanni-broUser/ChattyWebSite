@@ -1,6 +1,6 @@
 import sender from "./sender";
-import marked from './marked';
 import utils from "@/utils/utils";
+import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 const html = `
     <input id="fabCheckbox" type="checkbox" class="fab-checkbox" />
@@ -39,21 +39,37 @@ var botId = false;
 
 const injectChat = async (botIdInjected) => {
     botId = botIdInjected;
-    if ((await utils.tryBot(botId)).status != "ok") return;
+    const post = utils.postRequest({
+        bot_id: botId
+    });
 
-    addCss("../fab.css");
-    addCss("../chat.css");
-
-    const newDiv = document.createElement("div");
-    newDiv.id = "fabContainer";
-    newDiv.className = "fab-wrapper";
-    newDiv.innerHTML = html;
-    document.body.appendChild(newDiv);
-
-    const button = document.getElementById('circular-button')
-    button.classList.add('btn-loading');
-    sender.sendMessage(botId, threadId, "Ciao", addMessage);
-    button.addEventListener("click", sendMessageByForm);
+    fetch(`${post.hostname}try-bot`, post.options)
+        .then(response => {
+            if (!response.ok)
+                throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);
+                return response.json();
+        })
+        .then(data => {
+            if (data.status == "Production") {
+                addCss("../fab.css");
+                addCss("../chat.css");
+            
+                const newDiv = document.createElement("div");
+                newDiv.id = "fabContainer";
+                newDiv.className = "fab-wrapper";
+                newDiv.innerHTML = html;
+                document.body.appendChild(newDiv);
+            
+                const button = document.getElementById('circular-button')
+                button.classList.add('btn-loading');
+                sender.sendMessage(botId, threadId, "Ciao", addMessage);
+                button.addEventListener("click", sendMessageByForm);
+            } else
+                console.error('Errore nella richiesta:', 'Bot Not Production');
+        })
+        .catch(error => {
+            console.error('Errore nella richiesta:', error);
+        });
 };
 
 const addCss = (href) => {
@@ -70,7 +86,7 @@ const addMessage = (message, bot = true) => {
     else msg.style.marginLeft = "75px";
     msg.innerHTML = `
         <h4>${bot ? "Bot" : "Utente"}</h4>
-        <p>${marked.parseMd(message)}</p>
+        <p>${marked.parse(message)}</p>
     `;
     document.getElementById('circular-button').classList.remove('btn-loading');
     chat.appendChild(msg);
@@ -85,6 +101,10 @@ const sendMessageByForm = () => {
         sender.sendMessage(botId, threadId, input.value, addMessage);
         input.value = "";
     }
+};
+
+const tryBot = () => {
+
 };
 
 export default {

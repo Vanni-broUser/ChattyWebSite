@@ -5,7 +5,7 @@
         <v-card elevation="20" class="form-container" v-if="botId == ''">
           <v-card-title style="white-space: normal;">
             <div class="d-flex align-center justify-space-around">
-              <v-avatar image="@/assets/logo.jpeg" size="120" />
+              <v-avatar image="@/assets/logo/logo.png" size="120" />
             </div>
             <div>Registrati e richiedi una demo gratuita</div>
           </v-card-title>

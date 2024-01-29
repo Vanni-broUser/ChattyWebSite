@@ -3,7 +3,7 @@
         <v-sheet width="400" class="mx-auto login-box" elevation="20">
             <div v-if="changeFlag">
                 <div class="d-flex align-center justify-space-around">
-                    <v-avatar image="@/assets/logo.jpeg" size="120"></v-avatar>
+                    <v-avatar image="@/assets/logo/logo.png" size="120"></v-avatar>
                 </div>
                 <h3>Effettua il login</h3><br>
                 <v-form @submit.prevent="login">
