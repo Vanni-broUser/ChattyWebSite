@@ -10,7 +10,7 @@
                             :title="message.bot ? 'Bot' : 'Utente'"
                         >
                             <template v-slot:subtitle>
-                                <div v-html="marked.parseMd(message.message)"></div>
+                                <div v-html="marked.parse(message.message)"></div>
                             </template>
                         </v-list-item>
                     </v-list>
@@ -48,11 +48,11 @@
 </template>
 
 <script setup>
-    import marked from '@/chat/marked';
     import { ref, onMounted } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
     import session from '@/utils/session';
     import utils from '@/utils/utils';
+    import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
     var threadId = false;
     const messages = ref([]);
