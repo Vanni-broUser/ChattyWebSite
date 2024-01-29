@@ -1,10 +1,9 @@
 <template>
-    <v-container class="login-container" v-if="botData.status == 'Not Ready' || flagSetupBot">
+    <v-container v-if="botData.status == 'Not Ready' || flagSetupBot">
         <BotSetup :flagSetupBot="flagSetupBot" :botData="botData" @disableSetupBot="disableSetupBot" />
     </v-container>
-    <v-container class="login-container" v-if="botData.status == 'Not Verified'">
-        <OtpVerification :email="botData.mail" :botId="botId" :home="false" @updateStatus="updateStatus" />
-    </v-container>
+    <OtpVerification  v-if="botData.status == 'Not Verified'"
+        :email="botData.mail" :botId="botId" :home="false" @updateStatus="updateStatus" />
     <v-container v-if="botData.status == 'Ready' && !flagSetupBot">
         <Demo v-if="startDemo" />
         <v-container v-else class="message-box">

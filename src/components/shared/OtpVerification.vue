@@ -1,26 +1,28 @@
 <template>
-    <v-card elevation="20" class="form-container">
-        <v-card-title style="white-space: normal;">Verifica la tua mail</v-card-title>
-        <v-form @submit.prevent="verifyOtp">
-            <v-card-text>
-                <div style="text-align: center;">
-                    Abbiamo inviato una mail all'indirizzo {{ email }} con un codice OTP a 6 cifre.
-                </div>
-                <v-otp-input v-model="otp" type="password" />
-                <div v-if="error != ''" class="error-message">{{ error }}</div>
-            </v-card-text>
-            <v-card-actions>
-                <v-btn class="mt-2 gradient" type="submit" variant="tonal">Verifica</v-btn>
-                <v-spacer></v-spacer>
-                <div class="text-caption" v-if="flagOtpAgain">
-                    Non hai ricevuto nessun codice? <a href="#" @click.prevent="sendOtpAgain">Invia di nuovo</a>
-                </div>
-                <div class="text-caption" v-else>
-                    Non hai ricevuto nessun codice? Richiedi tra {{ timerOtpAgain }}
-                </div>
-            </v-card-actions>
-        </v-form>
-    </v-card>
+    <v-container class="login-container">
+        <v-card elevation="20" class="form-container">
+            <v-card-title style="white-space: normal;">Verifica la tua mail</v-card-title>
+            <v-form @submit.prevent="verifyOtp">
+                <v-card-text>
+                    <div style="text-align: center;">
+                        Abbiamo inviato una mail all'indirizzo {{ email }} con un codice OTP a 6 cifre.
+                    </div>
+                    <v-otp-input v-model="otp" type="password" />
+                    <div v-if="error != ''" class="error-message">{{ error }}</div>
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn class="mt-2 gradient" type="submit" variant="tonal">Verifica</v-btn>
+                    <v-spacer></v-spacer>
+                    <div class="text-caption" v-if="flagOtpAgain">
+                        Non hai ricevuto nessun codice? <a href="#" @click.prevent="sendOtpAgain">Invia di nuovo</a>
+                    </div>
+                    <div class="text-caption" v-else>
+                        Non hai ricevuto nessun codice? Richiedi tra {{ timerOtpAgain }}
+                    </div>
+                </v-card-actions>
+            </v-form>
+        </v-card>
+    </v-container>
 </template>
 
 <script setup>

@@ -1,4 +1,8 @@
 <template>
+    <v-container v-if="!flagSetupBot" style="text-align: center;">
+        <h1>Entro due giorni lavorativi la tua demo sarà pronta</h1>
+        <h3>Riceverai una mail appena sarà disponibile</h3>
+    </v-container>
     <v-container class="login-container">
         <v-sheet width="400" class="mx-auto login-box" elevation="20">
             <h3>Crea il tuo Chatty</h3><br>
@@ -17,7 +21,7 @@
                 <br><h4>Seleziona una palette colori:</h4><br>
                 <v-row class="d-flex align-center justify-space-around">
                     <v-chip-group v-model="userColor">
-                        <v-chip variant="flat" v-for="(colore, i) in colors" :key="i" color="black" :class="`${colore.color}-chip`">
+                        <v-chip variant="flat" v-for="(colore, i) in colors" :key="i" selected-class="selected" :class="`${colore.color}-chip`">
                             {{ colore.name }}
                         </v-chip>
                     </v-chip-group>
@@ -32,8 +36,9 @@
 </template>
 
 <script setup>
-    import { ref, onMounted } from 'vue';
     import utils from '@/utils/utils';
+    import { ref, onMounted } from 'vue';
+    import session from '@/utils/session';
     import { useRoute } from 'vue-router';
 
     const note = ref('');
@@ -142,7 +147,8 @@
             template: template,
             description: note.value,
             bot_id: route.params.botId,
-            color_palette: userColor.value
+            color_palette: userColor.value,
+            session_token: session.getCookie('session_token')
         });
 
         fetch(`${post.hostname}setup-bot`, post.options)
@@ -181,5 +187,8 @@
     }
     .orange-chip {
         background: orange;
+    }
+    .selected {
+        border: 4px solid black;
     }
 </style>
