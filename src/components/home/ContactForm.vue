@@ -29,6 +29,15 @@
                   <v-text-field v-model="password" type="password" label="Password" :rules="passwordRules" />
                 </v-col>
               </v-row>
+              <v-row no-gutters>
+                <v-col cols="12" md="12">
+                  <v-checkbox style="height: 40px;" v-model="tec">
+                    <template v-slot:label>
+                      <p>Ho letto e accetto i <a href='/Chatty-Terms-and-Conditions.pdf'>termini e le condizioni d'uso</a>.</p>
+                    </template>
+                  </v-checkbox>
+                </v-col>
+              </v-row>
               <div v-if="error != ''" class="error-message">{{ error }}</div>
             </v-card-text>
             <v-card-actions>
@@ -57,6 +66,7 @@
   const email = ref('');
   const error = ref('');
   const botId = ref('');
+  const tec = ref(false);
   const password = ref('');
 
   const requiredRules = [
@@ -98,11 +108,16 @@
   ]);
 
   const askBot = () => {
+    error.value = '';
+    if (!tec.value) {
+      error.value = "Accetta i termini e le condizioni d'uso per proseguire.";
+      return
+    }
+
     if (
       !utils.validateInput(name.value, requiredRules) && !utils.validateInput(email.value, emailRules) &&
       !utils.validateInput(site.value, siteRules) && !utils.validateInput(password.value, passwordRules)
     ) {
-      error.value = '';
       const post = utils.postRequest({
         name: name.value,
         email: email.value,
