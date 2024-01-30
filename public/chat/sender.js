@@ -1,4 +1,4 @@
-import utils from '@/utils/utils';
+import p from "./post.js";
 
 const sendMessage = (botId, threadId, message, func) => {
     var body = {
@@ -6,7 +6,7 @@ const sendMessage = (botId, threadId, message, func) => {
         bot_id: botId
     };
     if (threadId) body.thread_id = threadId;
-    const post = utils.postRequest(body);
+    const post = p.postRequest(body);
 
     fetch(`${post.hostname}chat`, post.options)
         .then(response => {

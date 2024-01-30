@@ -1,5 +1,5 @@
-import sender from "./sender";
-import utils from "@/utils/utils";
+import p from "./post.js";
+import sender from "./sender.js";
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 const html = `
@@ -39,7 +39,7 @@ var botId = false;
 
 const injectChat = async (botIdInjected) => {
     botId = botIdInjected;
-    const post = utils.postRequest({
+    const post = p.postRequest({
         bot_id: botId
     });
 
@@ -51,8 +51,8 @@ const injectChat = async (botIdInjected) => {
         })
         .then(data => {
             if (data.status == "Production") {
-                addCss("../fab.css");
-                addCss("../chat.css");
+                addCss("./fab.css");
+                addCss("./chat.css");
             
                 const newDiv = document.createElement("div");
                 newDiv.id = "fabContainer";
