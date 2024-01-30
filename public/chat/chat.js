@@ -33,12 +33,10 @@ const html = `
         <div>
     </div>
 `;
+const words = import.meta.url.toString().split('=');
+var botId = words[words.length - 1];
 
-var threadId = false;
-var botId = false;
-
-const injectChat = async (botIdInjected) => {
-    botId = botIdInjected;
+const injectChat = () => {
     const post = p.postRequest({
         bot_id: botId
     });
@@ -51,8 +49,8 @@ const injectChat = async (botIdInjected) => {
         })
         .then(data => {
             if (data.status == "Production") {
-                addCss("./fab.css");
-                addCss("./chat.css");
+                addCss("./chat/fab.css");
+                addCss("./chat/chat.css");
             
                 const newDiv = document.createElement("div");
                 newDiv.id = "fabContainer";
@@ -107,6 +105,4 @@ const tryBot = () => {
 
 };
 
-export default {
-    injectChat
-};
+injectChat(botId);

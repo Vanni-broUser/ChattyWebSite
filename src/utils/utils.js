@@ -7,6 +7,10 @@ const checkMobile = () => {
     isMobile.value = window.innerWidth < 600;
 };
 
+const getScriptCode = (botId) => {
+    return `<script type="module" src="/chat/chat.js?bot=${botId}"></script>`;
+};
+
 const setupMobileUtils = () => {
     onMounted(() => {
         checkMobile();
@@ -73,5 +77,6 @@ export default {
     postRequestFile,
     validateInput,
     validateInputAsync,
-    setupMobileUtils
+    setupMobileUtils,
+    getScriptCode
 };

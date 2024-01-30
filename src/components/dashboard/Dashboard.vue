@@ -4,7 +4,7 @@
         <h1>{{ botData.monthly_thread_usage }} / {{ limit }} chat in questo mese</h1>
         <br><h3>Incolla questo script per integrare il bot nel tuo sito</h3>
         <div class="code-block">
-            {{ code }}
+            {{ scriptCode }}
             <v-btn density="comfortable" icon="mdi-content-copy" class="copy-button" @click="copyCode" />
         </div>
         <br><v-divider :thickness="3" /><br>
@@ -19,10 +19,14 @@
 
 <script setup>
     import { ref } from 'vue';
+    import utils from '@/utils/utils';
+    import { useRoute } from 'vue-router';
     import prices_list from '@/utils/prices';
     import ModifyPanel from '@/components/dashboard/ModifyPanel';
 
-    const code = ref("Codice qui");
+    const route = useRoute();
+    const scriptCode = ref(utils.getScriptCode(route.params.botId));
+
     const emit = defineEmits(['btnSetupBot', 'btnViewChat']);
     const { botData } = defineProps(['botData']);
     const limit = ref(100);     // TEST_PLAN_THREADS_LIMIT
