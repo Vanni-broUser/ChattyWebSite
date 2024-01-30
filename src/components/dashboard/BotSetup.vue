@@ -1,69 +1,83 @@
 <template>
     <v-container v-if="!flagSetupBot" style="text-align: center;">
         <h1>Entro due giorni lavorativi la tua demo sarà pronta</h1>
-        <h3>Riceverai una mail appena sarà disponibile</h3>
+        <h3>Riceverai una mail appena sarà disponibile!</h3>
     </v-container>
-    <v-container class="login-container">
-        <v-sheet width="400" class="mx-auto login-box" elevation="20">
-            <h3>Crea il tuo Chatty</h3><br>
-            <v-file-input accept="image/*" label="Carica il tuo logo" v-model="image" @change="uploadImage" />
-            <div class="text-caption" v-if="messageImg != ''">{{ messageImg }}</div>
-            <div class="error-message" v-if="errorImg != ''">{{ errorImg }}</div>
-            <br><v-divider :thickness="3" /><br>
-            <v-form @submit.prevent="activeBot" enctype="multipart/form-data">
-                <v-textarea v-model="note" rows="3" label="Descrivi la tua azienda"
-                    hint="Più informazioni ci darai sulla tua azienda più il bot sarà efficace" />
-                <h4>Seleziona l'obbiettivo del tuo bot:</h4>
-                <v-checkbox v-model="service1" label="Automazione delle vendite" class="service-check-box" @click="checkBox(1)" />
-                <v-checkbox v-model="service2" label="Acquisizione di contatti" class="service-check-box" @click="checkBox(2)" />
-                <v-checkbox v-model="service3" label="Prenotazione di appuntamenti" class="service-check-box" @click="checkBox(3)" />
-                <div class="text-caption" v-if="msgCheckBox != ''">{{ msgCheckBox }}</div>
-                <br><h4>Seleziona una palette colori:</h4><br>
-                <v-row class="d-flex align-center justify-space-around">
-                    <v-chip-group v-model="userColor">
-                        <v-chip variant="flat" v-for="(colore, i) in colors" :key="i" selected-class="selected" :class="`${colore.color}-chip`">
-                            {{ colore.name }}
-                        </v-chip>
-                    </v-chip-group>
-                </v-row><br>
-                <v-btn type="submit" block class="mt-2 gradient" variant="tonal">Salva</v-btn>
-            </v-form>
-            <div class="text-caption" v-if="messageForm != ''"><br>{{ messageForm }}</div>
-            <div class="error-message" v-if="errorForm != ''"><br>{{ errorForm }}</div>
-            <v-btn @click="disableSetupBot" block class="mt-2 gradient" variant="tonal" v-if="flagSetupBot">Indietro</v-btn>
-        </v-sheet>
-    </v-container>
+    <h3 v-if="flagSetupBot">Configura il tuo Chatty</h3><br>
+    <v-expansion-panels v-model="panels" multiple>
+        <v-expansion-panel style="max-width: 1000px;">
+            <v-expansion-panel-title>Immagine</v-expansion-panel-title>
+            <v-expansion-panel-text>
+                <div class="text-caption" v-if="messageImg != ''">{{ messageImg }}</div>
+                <div class="error-message" v-if="errorImg != ''">{{ errorImg }}</div>
+                <v-file-input accept="image/*" label="Carica il tuo logo" v-model="image" @change="uploadImage" />
+            </v-expansion-panel-text>
+        </v-expansion-panel>
+        <v-expansion-panel style="max-width: 1000px;">
+            <v-expansion-panel-title>Informazioni di base</v-expansion-panel-title>
+            <v-expansion-panel-text>
+                <v-form @submit.prevent="activeBotBasicData">
+                    <v-text-field label="Nome" v-model="name" />
+                    <v-text-field label="Sito web" v-model="site" />
+                    <v-btn type="submit" block class="mt-2 gradient" variant="tonal">Salva</v-btn>
+                </v-form>
+            </v-expansion-panel-text>
+        </v-expansion-panel>
+        <v-expansion-panel style="max-width: 1000px;">
+            <v-expansion-panel-title>Informazioni bot</v-expansion-panel-title>
+            <v-expansion-panel-text>
+                <v-form @submit.prevent="activeBot">
+                    <v-textarea v-model="note" rows="3" label="Descrivi la tua azienda e i tuoi obbiettivi"
+                        hint="Più informazioni ci darai sulla tua azienda più il bot sarà efficace" />
+                    <h4>Seleziona l'obbiettivo del tuo bot:</h4>
+                    <v-checkbox v-model="service1" label="Automazione delle vendite" class="service-check-box" @click="checkBox(1)" />
+                    <v-checkbox v-model="service2" label="Acquisizione di contatti" class="service-check-box" @click="checkBox(2)" />
+                    <v-checkbox v-model="service3" label="Prenotazione di appuntamenti" class="service-check-box" @click="checkBox(3)" />
+                    <div class="text-caption" v-if="msgCheckBox != ''">{{ msgCheckBox }}</div>
+                    <br><h4>Seleziona una palette colori:</h4><br>
+                    <v-row class="d-flex align-center justify-space-around">
+                        <v-chip-group v-model="userColor">
+                            <v-chip variant="flat" v-for="(colore, i) in colors" :key="i" selected-class="selected" :class="`${colore.color}-chip`">
+                                {{ colore.name }}
+                            </v-chip>
+                        </v-chip-group>
+                    </v-row><br>
+                    <v-btn type="submit" block class="mt-2 gradient" variant="tonal">Salva</v-btn>
+                </v-form>
+                <div class="text-caption" v-if="messageForm != ''"><br>{{ messageForm }}</div>
+                <div class="error-message" v-if="errorForm != ''"><br>{{ errorForm }}</div>
+            </v-expansion-panel-text>
+        </v-expansion-panel>
+    </v-expansion-panels><br>
+    <v-btn @click="disableSetupBot" block class="mt-2 gradient" variant="outlined" v-if="flagSetupBot">Indietro</v-btn>
 </template>
 
 <script setup>
+    import { ref } from 'vue';
     import utils from '@/utils/utils';
-    import { ref, onMounted } from 'vue';
     import session from '@/utils/session';
     import { useRoute } from 'vue-router';
 
-    const note = ref('');
     const image = ref(null);
     const route = useRoute();
     const errorImg = ref('');
     const errorForm = ref('');
-    const messageImg = ref('');
     const messageForm = ref('');
+    const errorBaseForm = ref('');
+    const messageBaseForm = ref('');
     const msgCheckBox = ref('');
-    const service1 = ref(false);
-    const service2 = ref(false);
-    const service3 = ref(false);
-    const userColor = ref(null);
+    const panels = ref([0, 2]);
     const emit = defineEmits(['disableSetupBot']);
-    const { flagSetupBot, botData } = defineProps(['flagSetupBot', 'botData']);
 
-    onMounted(() => {
-        note.value = botData.description || '';
-        userColor.value = botData.color_palette || null;
-        service1.value = botData.template && botData.template.includes('Automazione delle vendite');
-        service2.value = botData.template && botData.template.includes('Acquisizione di contatti');
-        service3.value = botData.template && botData.template.includes('Prenotazione di appuntamenti');
-        messageImg.value = botData.image ? 'Immagine caricata' : 'Nussuna immagine caricata';
-    });
+    const { flagSetupBot, botData } = defineProps(['flagSetupBot', 'botData']);
+    const name = ref(botData.name || '');
+    const site = ref(botData.website || '');
+    const note = ref(botData.description || '');
+    const userColor = ref(botData.color_palette || null);
+    const messageImg = ref(botData.image ? 'Immagine caricata' : 'Nussuna immagine caricata');
+    const service1 = ref(botData.template && botData.template.includes('Automazione delle vendite'));
+    const service2 = ref(botData.template && botData.template.includes('Acquisizione di contatti'));
+    const service3 = ref(botData.template && botData.template.includes('Prenotazione di appuntamenti'));
 
     const colors = [
         {
@@ -136,36 +150,71 @@
             });
     };
 
+    const activeBotBasicData = () => {
+        if (!['', botData.name].includes(name.value) && !['', botData.website].includes(site.value)) {
+            errorBaseForm.value = '';
+            messageBaseForm.value = '';
+            const post = utils.postRequest({
+                name: name.value,
+                website: site.value,
+                bot_id: route.params.botId,
+                session_token: session.getCookie('session_token')
+            });
+
+            fetch(`${post.hostname}setup-bot`, post.options)
+                .then(response => {
+                    if (!response.ok)
+                        throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status == 'ok') 
+                        messageBaseForm.value = data.message;
+                    else
+                        errorBaseForm.value = data.error;
+                })
+                .catch(error => {
+                    console.error('Errore nella richiesta:', error);
+                });
+
+        }
+    };
+
     const activeBot = () => {
-        errorForm.value = '';
-        messageForm.value = '';
         const template = []
         if (service1.value) template.push('Automazione delle vendite');
         if (service2.value) template.push('Acquisizione di contatti');
         if (service3.value) template.push('Prenotazione di appuntamenti');
-        const post = utils.postRequest({
-            template: template,
-            description: note.value,
-            bot_id: route.params.botId,
-            color_palette: userColor.value,
-            session_token: session.getCookie('session_token')
-        });
+        if (template.length > 0 || note.value != '' || userColor.value) {
+            errorForm.value = '';
+            messageForm.value = '';
+            let body = {
+                template: template,
+                description: note.value,
+                bot_id: route.params.botId,
+                color_palette: userColor.value,
+                session_token: session.getCookie('session_token')
+            };
+            if (userColor.value)
+                body['color_palette'] = userColor.value;
+            const post = utils.postRequest(body);
 
-        fetch(`${post.hostname}setup-bot`, post.options)
-            .then(response => {
-                if (!response.ok)
-                    throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);
-                return response.json();
-            })
-            .then(data => {
-                if (data.status == 'ok') 
-                    messageForm.value = data.message;
-                else
-                    errorForm.value = data.error;
-            })
-            .catch(error => {
-                console.error('Errore nella richiesta:', error);
-            });
+            fetch(`${post.hostname}setup-bot`, post.options)
+                .then(response => {
+                    if (!response.ok)
+                        throw new Error(`Errore nella risposta del server: ${response.status} - ${response.statusText}`);
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status == 'ok') 
+                        messageForm.value = data.message;
+                    else
+                        errorForm.value = data.error;
+                })
+                .catch(error => {
+                    console.error('Errore nella richiesta:', error);
+                });
+        }
     };
 </script>
 
