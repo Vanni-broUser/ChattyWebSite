@@ -11,7 +11,7 @@ const html = `
     </label>
     <div class="fab-wheel">
         <div class="fab-chat-box">
-            <div class="fab-header"><h4>Chatty</h4></div>
+            <div class="fab-header"><h4 id="chat-header"></h4></div>
             <div class="fab-messages">
                 <div class="fab-inital-text">
                     <p>
@@ -35,6 +35,7 @@ const html = `
 `;
 const words = import.meta.url.toString().split('=');
 var botId = words[words.length - 1];
+const threadId = null;
 
 const injectChat = () => {
     const post = p.postRequest({
@@ -49,8 +50,8 @@ const injectChat = () => {
         })
         .then(data => {
             if (data.status == "Production") {
-                addCss("./chat/fab.css");
-                addCss("./chat/chat.css");
+                addCss("/chat/fab.css");
+                addCss("/chat/chat.css");
             
                 const newDiv = document.createElement("div");
                 newDiv.id = "fabContainer";
@@ -58,7 +59,8 @@ const injectChat = () => {
                 newDiv.innerHTML = html;
                 document.body.appendChild(newDiv);
             
-                const button = document.getElementById('circular-button')
+                document.getElementById('chat-header').innerHTML = `${data.name} bot`;
+                const button = document.getElementById('circular-button');
                 button.classList.add('btn-loading');
                 sender.sendMessage(botId, threadId, "Ciao", addMessage);
                 button.addEventListener("click", sendMessageByForm);
@@ -99,10 +101,6 @@ const sendMessageByForm = () => {
         sender.sendMessage(botId, threadId, input.value, addMessage);
         input.value = "";
     }
-};
-
-const tryBot = () => {
-
 };
 
 injectChat(botId);

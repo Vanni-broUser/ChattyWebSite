@@ -4,7 +4,7 @@
     </v-container>
     <OtpVerification  v-if="botData.status == 'Not Verified'"
         :email="botData.mail" :botId="botId" :home="false" @updateStatus="updateStatus" />
-    <v-container v-if="botData.status == 'Ready' && !flagSetupBot">
+    <v-container v-if="['Ready', 'Testing'].includes(botData.status)  && !flagSetupBot">
         <Demo v-if="startDemo" />
         <v-container v-else class="message-box">
             <h1>Clicca qui per avviare una demo</h1><br>

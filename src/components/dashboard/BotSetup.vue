@@ -21,6 +21,8 @@
                     <v-text-field label="Sito web" v-model="site" />
                     <v-btn type="submit" block class="mt-2 gradient" variant="tonal">Salva</v-btn>
                 </v-form>
+                <div class="text-caption" v-if="messageBaseForm != ''"><br>{{ messageBaseForm }}</div>
+                <div class="error-message" v-if="errorBaseForm != ''"><br>{{ errorBaseForm }}</div>
             </v-expansion-panel-text>
         </v-expansion-panel>
         <v-expansion-panel style="max-width: 1000px;">
@@ -62,11 +64,11 @@
     const route = useRoute();
     const errorImg = ref('');
     const errorForm = ref('');
+    const panels = ref([0, 2]);
+    const msgCheckBox = ref('');
     const messageForm = ref('');
     const errorBaseForm = ref('');
     const messageBaseForm = ref('');
-    const msgCheckBox = ref('');
-    const panels = ref([0, 2]);
     const emit = defineEmits(['disableSetupBot']);
 
     const { flagSetupBot, botData } = defineProps(['flagSetupBot', 'botData']);
@@ -118,7 +120,7 @@
     };
 
     const deactiveCheckBox = (first, second) => {
-        if (botData.plan == 'Basic' || ['Not Ready', 'Ready'].includes(botData.status)) {
+        if (botData.plan == 'Basic' || ['Not Ready', 'Ready', 'Testing'].includes(botData.status)) {
             first.value = false;
             second.value = false;
         } else if (botData.plan == 'Premium') {
@@ -151,7 +153,7 @@
     };
 
     const activeBotBasicData = () => {
-        if (!['', botData.name].includes(name.value) && !['', botData.website].includes(site.value)) {
+        if (!['', botData.name].includes(name.value) || !['', botData.website].includes(site.value)) {
             errorBaseForm.value = '';
             messageBaseForm.value = '';
             const post = utils.postRequest({
