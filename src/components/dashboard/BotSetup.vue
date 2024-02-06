@@ -39,7 +39,7 @@
                     <br><h4>Seleziona una palette colori:</h4><br>
                     <v-row class="d-flex align-center justify-space-around">
                         <v-chip-group v-model="userColor">
-                            <v-chip variant="flat" v-for="(colore, i) in colors" :key="i" selected-class="selected" :class="`${colore.color}-chip`">
+                            <v-chip variant="flat" v-for="(colore, i) in colors" :key="i" selected-class="selected" :class="`${colore.class}-chip`">
                                 {{ colore.name }}
                             </v-chip>
                         </v-chip-group>
@@ -58,10 +58,11 @@
     import { ref } from 'vue';
     import utils from '@/utils/utils';
     import session from '@/utils/session';
-    import { useRoute } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
 
     const image = ref(null);
     const route = useRoute();
+    const router = useRouter();
     const errorImg = ref('');
     const errorForm = ref('');
     const panels = ref([0, 2]);
@@ -71,38 +72,39 @@
     const messageBaseForm = ref('');
     const emit = defineEmits(['disableSetupBot']);
 
+    const colors = [
+        {
+            name: 'Blu',
+            class: 'blue'
+        },
+        {
+            name: 'Rosso',
+            class: 'red'
+        },
+        {
+            name: 'Verde',
+            class: 'green'
+        },
+        {
+            name: 'Viola',
+            class: 'purple'
+        },
+        {
+            name: 'Arancione',
+            class: 'orange'
+        }
+    ];
+
     const { flagSetupBot, botData } = defineProps(['flagSetupBot', 'botData']);
     const name = ref(botData.name || '');
     const site = ref(botData.website || '');
     const note = ref(botData.description || '');
-    const userColor = ref(botData.color_palette || null);
+    const userColor = ref(botData.color_palette ? colors.
+        findIndex(palette => palette.name == botData.color_palette) : null);
     const messageImg = ref(botData.image ? 'Immagine caricata' : 'Nussuna immagine caricata');
-    const service1 = ref(botData.template && botData.template.includes('Automazione delle vendite'));
-    const service2 = ref(botData.template && botData.template.includes('Acquisizione di contatti'));
-    const service3 = ref(botData.template && botData.template.includes('Prenotazione di appuntamenti'));
-
-    const colors = [
-        {
-            name: 'Blu',
-            color: 'blue'
-        },
-        {
-            name: 'Rosso',
-            color: 'red'
-        },
-        {
-            name: 'Verde',
-            color: 'green'
-        },
-        {
-            name: 'Viola',
-            color: 'purple'
-        },
-        {
-            name: 'Arancione',
-            color: 'orange'
-        }
-    ];
+    const service1 = ref(botData.template && botData.template.includes('Selling'));
+    const service3 = ref(botData.template && botData.template.includes('Booking'));
+    const service2 = ref(botData.template && botData.template.includes('Lead Capture'));
 
     const disableSetupBot = () => {
         emit('disableSetupBot');
@@ -172,7 +174,10 @@
                 .then(data => {
                     if (data.status == 'ok') 
                         messageBaseForm.value = data.message;
-                    else
+                    else if (data.status == 'ko' && data.message == 'Sessione scaduta') {
+                        alert(data.message);
+                        router.push('/login');
+                    } else
                         errorBaseForm.value = data.error;
                 })
                 .catch(error => {
@@ -184,9 +189,9 @@
 
     const activeBot = () => {
         const template = []
-        if (service1.value) template.push('Automazione delle vendite');
-        if (service2.value) template.push('Acquisizione di contatti');
-        if (service3.value) template.push('Prenotazione di appuntamenti');
+        if (service1.value) template.push('Selling');
+        if (service3.value) template.push('Booking');
+        if (service2.value) template.push('Lead Capture');
         if (template.length > 0 || note.value != '' || userColor.value) {
             errorForm.value = '';
             messageForm.value = '';
@@ -198,7 +203,7 @@
                 session_token: session.getCookie('session_token')
             };
             if (userColor.value)
-                body['color_palette'] = userColor.value;
+                body['color_palette'] = colors[userColor.value].name;
             const post = utils.postRequest(body);
 
             fetch(`${post.hostname}setup-bot`, post.options)
@@ -210,7 +215,10 @@
                 .then(data => {
                     if (data.status == 'ok') 
                         messageForm.value = data.message;
-                    else
+                    else if (data.status == 'ko' && data.message == 'Sessione scaduta') {
+                        alert(data.message);
+                        router.push('/login');
+                    } else
                         errorForm.value = data.error;
                 })
                 .catch(error => {

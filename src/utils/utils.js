@@ -1,7 +1,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const isMobile = ref(false);
-const hostname = 'https://9a34361f-5207-4d58-a782-e3689098fc7f-00-3oimqd2b5kvwi.worf.replit.dev/';
+const hostname = 'http://127.0.0.1:8080/';
 
 const checkMobile = () => {
     isMobile.value = window.innerWidth < 600;

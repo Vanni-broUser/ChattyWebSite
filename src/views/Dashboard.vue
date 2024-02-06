@@ -24,6 +24,9 @@
     <v-container v-if="flagViewChat">
         <ViewChat @btnViewChat="btnViewChat" />
     </v-container>
+    <v-container v-if="botData.status == 'Expired'">
+        <PricesView page="Expired" :mail="botData.mail" :plan="{expiredDate: botData.expiry_date}" />
+    </v-container>
 </template>
 
 <script setup>
