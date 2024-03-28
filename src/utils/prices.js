@@ -88,7 +88,31 @@ const prices = [
                 text: "Tre funzionalità per bot"
             }
         ]
-    }
+    },
+    {
+        name: "Simple",
+        stripeIds: {
+            month: "price_1OyWbPAKuqbgBCCYxs3ifWZ2"
+        },
+        features: [
+            {
+                icon: "mdi-forum",
+                text: "1000 chat al mese"
+            },
+            {
+                icon: "mdi-account",
+                text: "Personalizzazione limitata"
+            },
+            {
+                icon: "mdi-chart-bar",
+                text: "Report delle chat"
+            },
+            {
+                icon: "mdi-numeric-1-circle",
+                text: "Una funzionalità per bot"
+            }
+        ]
+    },
 ];
 
 
